@@ -8,6 +8,7 @@ public enum ActionOptions {
     public static ActionOptions check(String option) {
         return Arrays.stream(ActionOptions.values())
                 .filter(options -> options.toString().equalsIgnoreCase(option))
-                .findAny().get();
+                .findAny()
+                .orElse(UNKNOW);
     }
 }
