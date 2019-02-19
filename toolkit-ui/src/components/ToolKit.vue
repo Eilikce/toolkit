@@ -10,7 +10,7 @@
             <button v-on:click="paiRequest">执行</button>
             <br/>
             <span>从本地文件获取数据：</span><input v-model="bakDataFile" placeholder="文件名">
-            <button v-on:click="paiRequest">执行</button>
+            <button v-on:click="paiLocalRequest">执行</button>
             <br/>
             <button v-on:click="showBakDataFile">显示备份文件</button>
         </li>
@@ -55,7 +55,7 @@ export default {
       bakDataFile: '',
       paiResponse: '',
       destUrl: '192.168.95.120:9200',
-      testUrl: 'http://192.168.95.121:9200/uas_agent_info/_search?pretty',
+      testUrl: 'http://192.168.95.121:9200/_cat',
       testRequestBody: '',
       msg: ''
     }
@@ -65,33 +65,59 @@ export default {
       let request
       switch (method) {
         case 'GET':
-          request = axios.get(this.testUrl, {timeout: 3000})
+          request = axios.get(url, {timeout: 3000})
           break
         default:
-          request = axios.post(this.testUrl, this.testRequestBody, {timeout: 3000})
+          request = axios.post(url, requestBody, {timeout: 3000})
           break
       }
       request.then((response) => {
         this.refreshMsg(response)
       })
         .catch((error) => {
-          this.refreshMsg(error)
+          this.refreshError(error)
         })
     },
-    refreshMsg: function (msg) {
-      this.msg = msg
+    refreshMsg: function (response) {
+      this.msg = response.data
+    },
+    refreshError: function (response) {
+      this.msg = response
     },
     testGetRequest: function () {
-      this.baseRequest(this.testUrl, this.testRequestBody, 'GET')
+      axios.get(this.testUrl, {timeout: 3000})
+        .then((response) => {
+          this.msg = response
+        })
+        .catch((error) => {
+          this.msg = error
+        })
     },
     testPostRequest: function () {
-      this.baseRequest(this.testUrl, this.testRequestBody)
+      axios.post(this.testUrl, this.testRequestBody, {timeout: 3000})
+        .then((response) => {
+          this.msg = response
+        })
+        .catch((error) => {
+          this.msg = error
+        })
     },
     paiRequest: function () {
+      if (this.sourceUrl === '') {
+        this.msg = '请输入ES地址'
+        return
+      }
       this.baseRequest('/elasticsearch/pai', {
         url: this.sourceUrl,
         bakDataFile: this.bakDataFile
       })
+    },
+    paiLocalRequest: function () {
+      if (this.bakDataFile === '') {
+        this.msg = '请输入数据备份文件名'
+        return
+      }
+      this.paiRequest()
     },
     caiRequest: function () {
       this.baseRequest('/elasticsearch/cai', {

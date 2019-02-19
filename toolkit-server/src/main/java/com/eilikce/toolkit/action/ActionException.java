@@ -6,7 +6,4 @@ public class ActionException extends Exception {
         super(message, cause);
     }
 
-    public ActionException(String message) {
-        super(message);
-    }
 }

@@ -2,12 +2,17 @@ package com.eilikce.toolkit.elasticsearch.dao;
 
 import com.eilikce.toolkit.elasticsearch.client.SimpleClient;
 import org.elasticsearch.client.RestClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class BaseDao {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BaseDao.class);
+
     private static BaseDao INSTANCE = new BaseDao();
     private String url;
 
@@ -31,7 +36,7 @@ public class BaseDao {
             try {
                 simpleClient.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error("Elasticsearch操作失败", e);
             }
         }
 
@@ -44,10 +49,9 @@ public class BaseDao {
                 consumer.accept(client);
             } finally {
                 try {
-                    assert client != null;
                     client.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOG.error("Elasticsearch操作失败", e);
                 }
             }
         }

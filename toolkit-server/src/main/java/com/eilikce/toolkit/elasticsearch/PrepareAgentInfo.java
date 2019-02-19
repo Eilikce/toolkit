@@ -3,7 +3,7 @@ package com.eilikce.toolkit.elasticsearch;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.eilikce.toolkit.action.EilikceAction;
+import com.eilikce.toolkit.action.BaseAction;
 import com.eilikce.toolkit.elasticsearch.dao.BaseDao;
 import com.eilikce.toolkit.file.FileUtil;
 import org.apache.http.util.EntityUtils;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class PrepareAgentInfo implements EilikceAction {
+public class PrepareAgentInfo implements BaseAction<Void> {
 
     private BaseDao dao = BaseDao.getInstance();
 
@@ -23,22 +23,23 @@ public class PrepareAgentInfo implements EilikceAction {
     private String bakDataFile;
 
     @Override
-    public EilikceAction init(Map<String,String> options) {
-        Optional.of(options.get("url")).ifPresent(url -> dao.init(url));
-        Optional.ofNullable(options.get("bakDataFile")).ifPresent(fileName -> bakDataFile=fileName);
+    public BaseAction init(Map<String,String> param) {
+        Optional.of(param.get("url")).ifPresent(url -> dao.init(url));
+        Optional.ofNullable(param.get("bakDataFile")).ifPresent(fileName -> bakDataFile=fileName);
         return this;
     }
 
     @Override
-    public void doAction() {
+    public Void doAction() {
         prepareData();
         bulkActionsCreate();
+        return null;
     }
 
     private void prepareData() {
 
         if (bakDataFile != null && !"".equals(bakDataFile)) {
-            responseData = FileUtil.ReadFile(bakDataFile);
+            responseData = FileUtil.readFile(bakDataFile);
         } else {
             responseData = dao.baseHandler(restClient -> {
                 String data = null;

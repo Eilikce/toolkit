@@ -1,7 +1,7 @@
 package com.eilikce.toolkit.elasticsearch;
 
 import com.alibaba.fastjson.JSON;
-import com.eilikce.toolkit.action.EilikceAction;
+import com.eilikce.toolkit.action.BaseAction;
 import com.eilikce.toolkit.elasticsearch.dao.BaseDao;
 import com.eilikce.toolkit.file.FileUtil;
 import org.apache.http.entity.StringEntity;
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class CreateAgentInfo implements EilikceAction {
+public class CreateAgentInfo implements BaseAction<Void> {
 
     private static final Logger LOG = LoggerFactory.getLogger(CreateAgentInfo.class);
 
@@ -25,16 +25,17 @@ public class CreateAgentInfo implements EilikceAction {
     private String bulkActions;
 
     @Override
-    public EilikceAction init(Map<String, String> options) {
+    public BaseAction init(Map<String, String> param) {
 
-        Optional.of(options.get("url")).ifPresent(url -> dao.init(url));
+        Optional.of(param.get("url")).ifPresent(url -> dao.init(url));
         return this;
     }
 
     @Override
-    public void doAction() {
+    public Void doAction() {
         parseBulkActions();
         createData();
+        return null;
     }
 
     private void createData() {
@@ -58,7 +59,7 @@ public class CreateAgentInfo implements EilikceAction {
 
     private void parseBulkActions() {
         LOG.info("解析 bulkActions.json ...");
-        String bulkJson = FileUtil.ReadFile("bulkActions.json");
+        String bulkJson = FileUtil.readFile("bulkActions.json");
         bulkActions = JSON.parseArray(bulkJson).stream()
                 .map(Object::toString)
                 .collect(Collectors.joining("\n", "", "\n"));

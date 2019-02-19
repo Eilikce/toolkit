@@ -2,10 +2,14 @@ package com.eilikce.toolkit.elasticsearch.client;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class SimpleClient {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SimpleClient.class);
 
     private RestClient client;
 
@@ -18,7 +22,7 @@ public class SimpleClient {
     }
 
     public RestClient connect(String host, int port) {
-        System.out.println("Elasticsearch connect "+host+":"+port);
+        LOG.info("Elasticsearch connect "+host+":"+port);
         return client = RestClient.builder(
                 new HttpHost(host, port, "http")).build();
     }
