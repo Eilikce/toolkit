@@ -1,4 +1,4 @@
-package com.eilikce.toolkit.elasticsearch.client;
+package com.eilikce.toolkit.kits.elasticsearch.client;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;

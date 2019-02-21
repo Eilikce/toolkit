@@ -1,6 +1,6 @@
-package com.eilikce.toolkit.elasticsearch.dao;
+package com.eilikce.toolkit.kits.elasticsearch.dao;
 
-import com.eilikce.toolkit.elasticsearch.client.SimpleClient;
+import com.eilikce.toolkit.kits.elasticsearch.client.SimpleClient;
 import org.elasticsearch.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

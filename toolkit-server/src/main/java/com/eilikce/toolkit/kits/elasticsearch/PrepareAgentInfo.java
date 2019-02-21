@@ -1,10 +1,10 @@
-package com.eilikce.toolkit.elasticsearch;
+package com.eilikce.toolkit.kits.elasticsearch;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eilikce.toolkit.action.BaseAction;
-import com.eilikce.toolkit.elasticsearch.dao.BaseDao;
+import com.eilikce.toolkit.kits.elasticsearch.dao.BaseDao;
 import com.eilikce.toolkit.file.FileUtil;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.client.Request;

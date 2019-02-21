@@ -1,44 +1,25 @@
 package com.eilikce.toolkit;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes={EilikceToolKit.class})// 指定启动类
 public class EilikceToolKitTest {
 
-    private static String[] OPTIONS;
+    @Autowired
+    private MockMvc mvc;
 
     @Test
-    public void startPai() {
-
-        String[] args = new String[]{"", "", ""};
-        args[0] = "pai";
-        args[1] = "192.168.95.121:9200";
-
-        EilikceToolKit.main(args);
-
+    public void controllerTest() throws Exception {
+        int status = mvc.perform(MockMvcRequestBuilders.get("/mysql/query")
+                .content("")).andReturn().getResponse().getStatus();
+        System.out.println(status);
     }
-
-    @Test
-    public void startPaiLocal() {
-
-        String[] args = new String[]{"", "", ""};
-        args[0] = "pai";
-        args[1] = "192.168.95.121:9200";
-        args[2] = "bakData_1548929632547.json";
-
-        EilikceToolKit.main(args);
-
-    }
-
-    @Test
-    public void startCai() {
-
-        String[] args = new String[]{"", "", ""};
-        args[0] = "cai";
-        args[1] = "192.168.95.121:9200";
-
-        EilikceToolKit.main(args);
-
-    }
-
 
 }

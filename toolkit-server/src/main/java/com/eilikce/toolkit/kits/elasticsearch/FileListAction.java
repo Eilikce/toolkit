@@ -1,4 +1,4 @@
-package com.eilikce.toolkit.elasticsearch;
+package com.eilikce.toolkit.kits.elasticsearch;
 
 import com.eilikce.toolkit.action.BaseAction;
 import com.eilikce.toolkit.file.FileUtil;

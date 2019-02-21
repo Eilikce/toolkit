@@ -44,5 +44,10 @@ public class ActionController {
         return service.elasticsearchFileList();
     }
 
+    @RequestMapping("mysql/query")
+    HttpResult mysqlQuery() {
+        return service.mysqlQuery();
+    }
+
 
 }

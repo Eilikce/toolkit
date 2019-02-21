@@ -1,27 +1,40 @@
 package com.eilikce.toolkit.service;
 
-import com.eilikce.toolkit.action.Actions;
-import com.eilikce.toolkit.elasticsearch.CreateAgentInfo;
-import com.eilikce.toolkit.elasticsearch.FileListAction;
-import com.eilikce.toolkit.elasticsearch.PrepareAgentInfo;
+import com.eilikce.toolkit.kits.elasticsearch.CreateAgentInfo;
+import com.eilikce.toolkit.kits.elasticsearch.FileListAction;
+import com.eilikce.toolkit.kits.elasticsearch.PrepareAgentInfo;
+import com.eilikce.toolkit.kits.mysql.QueryAction;
+import com.eilikce.toolkit.kits.mysql.dao.EilikceDao;
 import com.eilikce.toolkit.model.HttpResult;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 @Service
 public class ActionService extends BaseService {
 
+    @Resource
+    private EilikceDao eilikceDao;
+
     public HttpResult elasticsearchPrepareAgentInfo(Map<String, String> param) {
-        return baseActionService(() -> Actions.choseActions(PrepareAgentInfo::new, param));
+        return baseActionService(PrepareAgentInfo::new,
+                action -> action.init(param));
     }
 
     public HttpResult elasticsearchCreateAgentInfo(Map<String, String> param) {
-        return baseActionService(() -> Actions.choseActions(CreateAgentInfo::new, param));
+        return baseActionService(CreateAgentInfo::new, action -> action.init(param));
     }
 
     public HttpResult elasticsearchFileList() {
-        return baseActionService(() -> Actions.choseActions(FileListAction::new));
+        FileListAction f = new FileListAction();
+        f.doAction();
+        return baseActionService(FileListAction::new, fileListAction -> fileListAction);
+    }
+
+    public HttpResult mysqlQuery() {
+        return baseActionService(QueryAction::new,
+                action -> action.init(eilikceDao));
     }
 
 }

@@ -55,7 +55,7 @@ export default {
       bakDataFile: '',
       paiResponse: '',
       destUrl: '192.168.95.120:9200',
-      testUrl: 'http://192.168.95.121:9200/_cat',
+      testUrl: 'http://127.0.0.1:8080/mysql/query',
       testRequestBody: '',
       msg: ''
     }

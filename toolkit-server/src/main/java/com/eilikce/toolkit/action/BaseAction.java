@@ -4,7 +4,11 @@ import java.util.Map;
 
 public interface BaseAction<R> {
 
-    default BaseAction<R> init(Map<String, String> param) {
+    default BaseAction init(Map<String, String> param) {
+        return this;
+    }
+
+    default BaseAction init(Object... objects) {
         return this;
     }
 
