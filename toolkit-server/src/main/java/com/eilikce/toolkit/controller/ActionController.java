@@ -49,5 +49,10 @@ public class ActionController {
         return service.mysqlQuery();
     }
 
+    @RequestMapping("redis/query")
+    HttpResult redisQuery() {
+        return service.redisQuery();
+    }
+
 
 }
