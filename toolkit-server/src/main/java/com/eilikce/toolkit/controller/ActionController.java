@@ -1,5 +1,6 @@
 package com.eilikce.toolkit.controller;
 
+import com.eilikce.toolkit.model.HttpRequestData;
 import com.eilikce.toolkit.model.HttpResult;
 import com.eilikce.toolkit.service.ActionService;
 import org.slf4j.Logger;
@@ -18,10 +19,10 @@ public class ActionController {
     private static final Logger LOG = LoggerFactory.getLogger(ActionController.class);
 
     @Autowired
-    ActionService service;
+    private ActionService service;
 
     @RequestMapping("test")
-    HttpResult test(@RequestBody Map<String,String> param) {
+    HttpResult test(@RequestBody HttpRequestData param) {
         LOG.info(param.toString());
         return new HttpResult(0, param,"");
     }

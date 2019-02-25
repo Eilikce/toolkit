@@ -28,7 +28,7 @@
           <button v-on:click="testPostRequest">POST</button>
         </li>
         <li>
-          <textarea v-model="testRequestBody" placeholder="例：{name:'eilikce',age:27}"></textarea>
+          <textarea v-model="testRequestBody" placeholder='例：{"source":{"create-data":"2019-02-25"},"msg":{"name":"Eilikce","age":27}}''></textarea>
         </li>
       </ul>
     </div>
@@ -56,7 +56,7 @@ export default {
       paiResponse: '',
       destUrl: '192.168.95.120:9200',
       testUrl: 'http://127.0.0.1:8080/mysql/query',
-      testRequestBody: '',
+      testRequestBody: '{"source":{"create-data":"2019-02-25"},"msg":{"name":"Eilikce","age":27}}',
       msg: ''
     }
   },
@@ -94,7 +94,7 @@ export default {
         })
     },
     testPostRequest: function () {
-      axios.post(this.testUrl, this.testRequestBody, {timeout: 3000})
+      axios.post(this.testUrl, this.testRequestBody, {timeout: 3000, headers: {'content-type': 'application/json'}})
         .then((response) => {
           this.msg = response
         })
