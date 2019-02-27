@@ -44,12 +44,6 @@ public class Eilikce implements Serializable {
      */
     private String detail;
 
-    /**
-     * url_volatile
-     */
-    private Integer urlVolatile;
-
-
     public Eilikce() {
     }
 
@@ -107,14 +101,6 @@ public class Eilikce implements Serializable {
 
     public void setDetail(String detail) {
         this.detail = detail;
-    }
-
-    public Integer getUrlVolatile() {
-        return urlVolatile;
-    }
-
-    public void setUrlVolatile(Integer urlVolatile) {
-        this.urlVolatile = urlVolatile;
     }
 
 }
